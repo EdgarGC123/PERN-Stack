@@ -1,71 +1,61 @@
 class App extends React.Component {
     state = {
-        people:[]
+        content:[]
     }
 
     componentDidMount = () => {
-        axios.get('/people').then(
+        axios.get('/videocontent').then(
             (response) => {
                 this.setState({
-                    people:response.data
+                    content:response.data
                 })
             }
         )
     }
 
-    createPerson = (event) => {
+    createVideo = (event) => {
         event.preventDefault();
         axios.post(
-            '/people',
+            '/videocontent',
             {
-                name:this.state.newPersonName,
-                age:this.state.newPersonAge,
+                header:this.state.header,
+                description:this.state.description,
+                link:this.state.video
             }
         ).then(
             (response) => {
                 this.setState({
-                    people:response.data
+                    content:response.data
                 })
             }
         )
     }
 
-    changeNewPersonAge = (event) => {
-        this.setState({
-            newPersonAge:event.target.value
-        });
-    }
-
-    changeNewPersonName = (event) => {
-        this.setState({
-            newPersonName:event.target.value
-        });
-    }
-
-    deletePerson = (event) => {
-        axios.delete('/people/' + event.target.value).then(
+    deleteVideo = (event) => {
+        axios.delete('/videocontent/' + event.target.value).then(
             (response) => {
                 this.setState({
-                    people:response.data
+                    content :response.data
                 })
             }
         )
 
     }
 
-    updatePerson = (event) => {
+    updateVideo = (event) => {
         event.preventDefault();
         const id = event.target.getAttribute('id');
         axios.put(
-            '/people/' + id,
+            '/videocontent/' + id,
             {
-                name:this.state.updatePersonName,
-                age:this.state.updatePersonAge,
+                header:this.state.header,
+                description:this.state.description,
+                link:this.state.video
             }
         ).then(
             (response) => {
                 this.setState({
-                    people:response.data,
+                    content:response.data,
                     name:'',
                     age:null,
                 })
@@ -73,45 +63,43 @@ class App extends React.Component {
         )
     }
 
-    changeUpdatePersonName = (event) => {
+    changeHandler = (event) => {
         this.setState(
             {
-                updatePersonName:event.target.value
-            }
-        )
-    }
-
-    changeUpdatePersonAge = (event) => {
-        this.setState(
-            {
-                updatePersonAge:event.target.value
+                [event.target.name]:event.target.value
             }
         )
     }
 
     render = () => {
         return <div>
-            <h2>Create Person</h2>
-            <form onSubmit={this.createPerson}>
-                <input onKeyUp={this.changeNewPersonName} type="text" placeholder="name" /><br/>
-                <input onKeyUp={this.changeNewPersonAge} type="number" placeholder="age" /><br/>
-                <input type="submit" value="Create Person" />
+            <h2>Create Video</h2>
+            <form onSubmit={this.createVideo}>
+                <input onChange={this.changeHandler} name = "header" type="text" placeholder="Heading" /><br/>
+                <input onChange={this.changeHandler} name = "description" type="text" placeholder="Description" /><br/>
+                <input onChange={this.changeHandler} name = "video" type="text" placeholder="Encoded Link"/><br/>
+                <input type="submit" value="Create Video" />
             </form>
-            <h2>List of People</h2>
+            <h2>List of Videos</h2>
             <ul>
                 {
-                    this.state.people.map(
-                        (person, index) => {
+                    this.state.content.map(
+                        (video, index) => {
                             return <li key={index}>
+                                <label>Header: </label>
+                                {video.header} <br/>
+                                <label>Description: </label>
+                                {video.description}<br/>
+                                <iframe width="791" height="445" src={video.link} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
-                                {person.name}: {person.age}
+                                <button value={video.id} onClick={this.deleteVideo}>DELETE</button>
 
-                                <button value={person.id} onClick={this.deletePerson}>DELETE</button>
+                                <form id={video.id} onSubmit={this.updateVideo}>
+                                    <input onChange={this.changeHandler} name = "header" type="text" defaultValue={video.header} /><br/>
+                                    <input onChange={this.changeHandler} name = "description" type="text" defaultValue={video.description} /><br/>
 
-                                <form id={person.id} onSubmit={this.updatePerson}>
-                                    <input onKeyUp={this.changeUpdatePersonName} type="text" placeholder="name"/><br/>
-                                    <input onKeyUp={this.changeUpdatePersonAge} type="number" placeholder="age"/><br/>
-                                    <input type="submit" value="Update Person"/>
+                                    <input onChange={this.changeHandler} name = "video" type="text" defaultValue={video.link}/><br/>
+                                    {video.link}
                                 </form>
                             </li>
                         }
