@@ -44,26 +44,26 @@ class App extends React.Component {
 
     updateVideo = (event) => {
         event.preventDefault();
+        // console.log("we are here")
         const id = event.target.getAttribute('id');
         axios.put(
             '/videocontent/' + id,
             {
                 header:this.state.header,
                 description:this.state.description,
-                link:this.state.video
+                link:this.state.link
             }
         ).then(
             (response) => {
                 this.setState({
                     content:response.data,
-                    name:'',
-                    age:null,
                 })
             }
         )
     }
 
     changeHandler = (event) => {
+        // console.log(event.target.name);
         this.setState(
             {
                 [event.target.name]:event.target.value
@@ -90,17 +90,17 @@ class App extends React.Component {
                                 {video.header} <br/>
                                 <label>Description: </label>
                                 {video.description}<br/>
-                                <iframe width="791" height="445" src={video.link} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                {/* <iframe width="791" height="445" src={video.link} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe> */}
 
-                                <button value={video.id} onClick={this.deleteVideo}>DELETE</button>
+                                {/* <button value={video.id} onClick={this.deleteVideo}>DELETE</button> */}
 
                                 <form id={video.id} onSubmit={this.updateVideo}>
                                     <input onChange={this.changeHandler} name = "header" type="text" defaultValue={video.header} /><br/>
                                     <input onChange={this.changeHandler} name = "description" type="text" defaultValue={video.description} /><br/>
-
-                                    <input onChange={this.changeHandler} name = "video" type="text" defaultValue={video.link}/><br/>
-                                    {video.link}
+                                    <input onChange={this.changeHandler} name = "link" type="text" defaultValue={video.link}/><br/>
+                                    <input type="submit" value="Update Video" />
                                 </form>
+                                
                             </li>
                         }
                     )

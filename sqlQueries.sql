@@ -8,3 +8,7 @@ insert into videos (header , description ,video ) VALUES ('First Tenth Hour Vide
 
 
 ALTER TABLE videos RENAME COLUMN video to link;
+
+
+insert into videos (header , description ,link ) VALUES ('First Tenth Hour Video', 'some description', 'https://www.youtube.com/embed/t6EiXCAgBc4');
+
