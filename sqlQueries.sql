@@ -12,3 +12,14 @@ ALTER TABLE videos RENAME COLUMN video to link;
 
 insert into videos (header , description ,link ) VALUES ('First Tenth Hour Video', 'some description', 'https://www.youtube.com/embed/t6EiXCAgBc4');
 
+
+
+-- sudo npm install -g create-react-app
+-- create-react-app person-brand
+-- cd person-brand
+-- git init
+-- heroku create -b https://github.com/mars/create-react-app-buildpack.git
+-- git add .
+-- git commit -m "react-create-app on Heroku"
+-- git push heroku master
+-- heroku open
