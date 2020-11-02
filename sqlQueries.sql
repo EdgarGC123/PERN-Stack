@@ -23,3 +23,5 @@ insert into videos (header , description ,link ) VALUES ('First Tenth Hour Video
 -- git commit -m "react-create-app on Heroku"
 -- git push heroku master
 -- heroku open
+
+create table photos (id SERIAl, header text, description text,photo text);

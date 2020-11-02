@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 8888
 const videosController = require('./controllers/videos.js');
 app.use('/videocontent', videosController);
 
+const photosController = require('./controllers/videos.js');
+app.use('/photocontent', photosController);
+
 postgres.connect();
 
 app.listen(PORT, () => {
