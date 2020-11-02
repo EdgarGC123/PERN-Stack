@@ -25,3 +25,6 @@ insert into videos (header , description ,link ) VALUES ('First Tenth Hour Video
 -- heroku open
 
 create table photos (id SERIAl, header text, description text,photo text);
+
+
+UPDATE photos SET header = 'EGC', description = 'Edgars logo', photo ='https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-0/s640x640/70146707_2366386613468814_4976009771816583168_o.jpg?_nc_cat=101&ccb=2&_nc_sid=84a396&_nc_ohc=N7QyNrlio3wAX9C3GH5&_nc_ht=scontent-ort2-1.xx&tp=7&oh=0b0762a3b47a88d421909db8a6e4aab2&oe=5FC45C65' WHERE id = 1;

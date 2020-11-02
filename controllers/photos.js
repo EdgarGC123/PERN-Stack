@@ -30,10 +30,11 @@ router2.delete('/:id', (req, res) => {
 });
 
 router2.put('/:id', (req, res) => {
-    console.log(req.body)
+    console.log("reqing body",req.body)
     postgres.query(`UPDATE photos SET header = '${req.body.header}', description = '${req.body.description}', photo ='${req.body.photo}' WHERE id = ${req.params.id};`, (err, results) => {
-        postgres.query('SELECT * FROM photos ORDER BY id ASC;', (err, results) => {
-            // console.log("we are now here");
+        console.log("error1 ",err)
+        postgres.query('SELECT * FROM photos ORDER BY id ASC;', (err2, results) => {
+            console.log("error2 ",err)
             res.json(results.rows)
         });
     })
